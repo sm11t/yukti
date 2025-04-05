@@ -1,14 +1,20 @@
+// src/index.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const authRoutes = require('./routes/authRoutes');
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/', authRoutes);
+// Import the aggregator
+const mainRouter = require('./routes'); 
+// or if you put it in ./routes/index.js, do exactly:
+// const mainRouter = require('./routes/index');
 
+// Mount it at '/'
+app.use('/', mainRouter);
+
+// Test route
 app.get('/', (req, res) => {
   res.send('Hello from the Express + JWT server!');
 });
